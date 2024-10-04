@@ -1,3 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boot X-Change</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #055ca3; /* WUJFC dark blue */
+            color: #fff;
+            padding: 20px 20px; /* Adjusted padding for less height */
+            display: flex;
+            align-items: center;
+        }
+
+        .hero img {
+            width: 50%; /* Image takes up half of the width */
+            height: auto;
+            max-width: 100%; /* Ensures the image is responsive */
+        }
+
+        .hero-text {
+            width: 50%; /* Text takes up the remaining half*/
+            padding-left: 30px;
+            padding-right: 20px; /* Adds some spacing to the right of the text */
+        }
+
+        .hero h1 {
+            font-size: 3.0rem; /* Updated title font size */
+            margin: 0;
+            font-weight: bold; /* Adjust as needed */
+        }
+
+        /* Inventory Section */
+        #inventory {
+            max-height: 3000px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column; /* Stack elements on smaller screens */
+                align-items: flex-start; /* Align to the left */
+            }
+
+            .hero img {
+                width: 100%; /* Image takes full width on small screens */
+                margin-top: 10px; /* Adds space above the image */
+            }
+
+            .hero-text {
+                width: 100%; /* Text takes full width on small screens */
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            #inventory {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Current Stock</h1>
+        </div>
+        <img src="https://github.com/adamgraveley/WUJFC-Boot-Exchange/raw/main/boot2%20pic.JPG" alt="Boot Header Image">
+    </section>
+
+    <!-- Inventory Section -->
+<div style="display: flex; justify-content: center; margin: auto; margin-top: 20px; margin-bottom: -10px;">
+    <a href="https://www.winslowunitedjuniorsfc.co.uk/boot-xchange" style="color: blue; text-decoration: underline;">Click here to see our Boot X-Change FAQs</a>
+</div>
+
+
+
 <div style="max-height: 3000px; overflow-y: auto;">
     <div id="inventory"></div>
 
@@ -30,25 +130,37 @@
                         return match ? `https://drive.google.com/thumbnail?id=${match[1]}&sz=s4000` : '';
                     });
 
-                    output += `
-                        <div style="border: 1px solid #ddd; padding: 15px; width: 80%; display: flex; flex-flow: row wrap; align-items: flex-start; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; font-family: Arial, sans-serif;">
-                            <div style="width: 30%; padding-left: 20px;">
-                                <p style="font-weight: bold; font-size: 18px; margin-bottom: -10px;">Size: ${size}</p>
-                                <p style="font-weight: bold; font-size: 18px;">${brand} ${model}</p>
-                                <p style="font-weight: normal; margin-bottom: -10px;">Type: ${type}</p>
-                                <p style="font-weight: normal; margin-bottom: -10px;">Grade: ${grade}</p>
-                                <p style="color: red;">Ref: ${ref}</p>
-                                <p><a href="mailto:boots@wujfc.com?subject=${encodeURIComponent(ref)}" style="color: blue; text-decoration: underline;">Click here to reserve these boots</a></p>
-                            </div>
-                            <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 10px; width: 65%;">
-                                ${imageUrls.map(url => url ? `
-                                    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 5px; background: #f9f9f9;">
-                                        <img src="${url}" alt="${ref}" style="max-height: 170px; width: auto; border-radius: 8px; cursor: pointer;" onclick="openLightbox('${url}')">
-                                    </div>
-                                ` : '').join('')}
-                            </div>
-                        </div>
-                    `;
+output += `
+    <div style="background-color: #f0f0f0; border: 1px solid #ddd; padding: 20px; margin:20px auto; display: flex; flex-wrap: wrap; width: fit-content; align-content: centre; max-width:900px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; font-family: Arial, sans-serif;">
+        <div style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 10px; margin:auto; display: flex; justify-content: center; align-items: center; width: 100%; max-width:800px;">
+            <div style="flex: 1; padding-left: 30px; text-align: left;">
+                <p style="font-weight: bold; font-size: 18px; margin-bottom: -10px;">Size: ${size}</p>
+                <p style="font-weight: bold; font-size: 18px;">${brand} ${model}</p>
+            </div>
+            <div style="flex: 1; padding-left: 20px; padding-right: 20px; text-align: left;">
+                <p style="font-weight: normal; margin-bottom: -10px;">Type: ${type}</p>
+                <p style="font-weight: normal;">Grade: ${grade}</p>
+    
+            </div>
+            <div style="flex: 1; padding-right: 30px; text-align: left;">
+                <p style="color: red; margin-bottom: -10px;">Ref: ${ref}</p>
+		<p>
+		    <a href="mailto:boots@winslowunitedjuniorsfc.co.uk?subject=${encodeURIComponent('Enquiry about boots: Ref ' + ref)}" style="color: blue; text-decoration: underline;">Email us to reserve boots</a>
+		</p>
+
+            </div>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 20px; width: 100%;">
+            ${imageUrls.map(url => url ? `
+                <div style="border: 1px solid #ddd; border-radius: 8px; padding: 5px; background: #f9f9f9; margin: 10px;">
+                    <img src="${url}" alt="${ref}" style="max-height: 180px; width: auto; border-radius: 8px; cursor: pointer;" onclick="openLightbox('${url}')">
+                </div>
+            ` : '').join('')}
+        </div>
+    </div>
+`;
+
                 });
 
                 document.getElementById('inventory').innerHTML = output;
@@ -88,3 +200,13 @@
         window.addEventListener('DOMContentLoaded', loadInventory);
     </script>
 </div>
+
+
+<!-- Footer -->
+<footer class="footer" style="background-color: #055ca3; color: white; padding: 10px; text-align: center;">
+    <h1>Winslow United Juniors FC</h1>
+    <a href="https://www.winslowunitedjuniorsfc.co.uk/boot-xchange" style="color: white; text-decoration: underline;"><p>Click here to see our Boot X-Change FAQs</a>
+</footer>
+
+</body>
+</html>
