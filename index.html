@@ -1,4 +1,97 @@
-<div style="max-height: 3000px; overflow-y: auto;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boot X-Change</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #055ca3; /* WUJFC dark blue */
+            color: #fff;
+            padding: 20px 20px; /* Adjusted padding for less height */
+            display: flex;
+            align-items: center;
+        }
+
+        .hero img {
+            width: 50%; /* Image takes up half of the width */
+            height: auto;
+            max-width: 100%; /* Ensures the image is responsive */
+        }
+
+        .hero-text {
+            width: 50%; /* Text takes up the remaining half*/
+            padding-left: 30px;
+            padding-right: 20px; /* Adds some spacing to the right of the text */
+        }
+
+        .hero h1 {
+            font-size: 3.0rem; /* Updated title font size */
+            margin: 0;
+            font-weight: bold; /* Adjust as needed */
+        }
+
+        /* Inventory Section */
+        #inventory {
+            max-height: 3000px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column; /* Stack elements on smaller screens */
+                align-items: flex-start; /* Align to the left */
+            }
+
+            .hero img {
+                width: 100%; /* Image takes full width on small screens */
+                margin-top: 10px; /* Adds space above the image */
+            }
+
+            .hero-text {
+                width: 100%; /* Text takes full width on small screens */
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            #inventory {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Current Stock</h1>
+        </div>
+        <img src="https://github.com/adamgraveley/WUJFC-Boot-Exchange/raw/main/boot2%20pic.JPG" alt="Boot Header Image">
+    </section>
+
+    <!-- Inventory Section -->
     <div id="inventory"></div>
 
     <script>
@@ -87,4 +180,11 @@
 
         window.addEventListener('DOMContentLoaded', loadInventory);
     </script>
-</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Contact us at: info@bootxchange.com</p>
+    </footer>
+
+</body>
+</html>
