@@ -17,27 +17,27 @@
         .hero {
             background-color: #055ca3; /* WUJFC dark blue */
             color: #fff;
-            padding: 20px 20px; /* Adjusted padding for less height */
+            padding: 20px 20px;
             display: flex;
             align-items: center;
         }
 
         .hero img {
-            width: 50%; /* Image takes up half of the width */
+            width: 50%;
             height: auto;
-            max-width: 100%; /* Ensures the image is responsive */
+            max-width: 100%;
         }
 
         .hero-text {
-            width: 50%; /* Text takes up the remaining half*/
+            width: 50%;
             padding-left: 30px;
-            padding-right: 20px; /* Adds some spacing to the right of the text */
+            padding-right: 20px;
         }
 
         .hero h1 {
-            font-size: 3.0rem; /* Updated title font size */
+            font-size: 3.0rem;
             margin: 0;
-            font-weight: bold; /* Adjust as needed */
+            font-weight: bold;
         }
 
         /* Inventory Section */
@@ -58,17 +58,17 @@
         /* Responsive Styles */
         @media (max-width: 768px) {
             .hero {
-                flex-direction: column; /* Stack elements on smaller screens */
-                align-items: flex-start; /* Align to the left */
+                flex-direction: column;
+                align-items: flex-start;
             }
 
             .hero img {
-                width: 100%; /* Image takes full width on small screens */
-                margin-top: 10px; /* Adds space above the image */
+                width: 100%;
+                margin-top: 10px;
             }
 
             .hero-text {
-                width: 100%; /* Text takes full width on small screens */
+                width: 100%;
             }
 
             .hero h1 {
@@ -92,121 +92,117 @@
     </section>
 
     <!-- Inventory Section -->
-<div style="display: flex; justify-content: center; margin: auto; margin-top: 20px; margin-bottom: -10px;">
-    <a href="https://www.winslowunitedjuniorsfc.co.uk/boot-xchange" style="color: blue; text-decoration: underline;">Click here to see our Boot X-Change FAQs</a>
-</div>
+    <div style="display: flex; justify-content: center; margin: auto; margin-top: 20px; margin-bottom: -10px;">
+        <a href="https://www.winslowunitedjuniorsfc.co.uk/boot-xchange" style="color: blue; text-decoration: underline;">Click here to see our Boot X-Change FAQs</a>
+    </div>
 
+    <div style="max-height: 3000px; overflow-y: auto;">
+        <div id="inventory"></div>
 
+        <script>
+            const spreadsheetId = '1sGzdyIYG05S12iYBtqlhnnpgnE530r-Ws_SCid8CXM8'; // New spreadsheet ID
+            const apiKey = 'AIzaSyC34SYm9S1I2_ihYLV2PRZxSV8-v7li0tk'; // Actual API key
+            const range = 'Inventory!B:H';
 
-<div style="max-height: 3000px; overflow-y: auto;">
-    <div id="inventory"></div>
+            async function loadInventory() {
+                try {
+                    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const data = await response.json();
+                    const rows = data.values;
+                    let output = '';
 
-    <script>
-        const spreadsheetId = '1oXmBg5VOxbp34fa9aBRjIp5XwP12kHHc7B50HLBdP5o';
-        const apiKey = 'AIzaSyAXH_1zqwnhc9iiNoXr4NdF_MXRPbJKj_8';
-        const range = 'Inventory!B:H';
+                    rows.slice(1).forEach(row => {
+                        const ref = row[0];
+                        const grade = row[1];
+                        const size = row[2];
+                        const brand = row[3];
+                        const model = row[4];
+                        const type = row[5];
+                        const pictures = row[6] ? row[6].split(',') : [];
 
-        async function loadInventory() {
-            try {
-                const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                const rows = data.values;
-                let output = '';
+                        const imageUrls = pictures.map(pic => {
+                            const match = pic.match(/id=([a-zA-Z0-9_-]+)/);
+                            return match ? `https://drive.google.com/thumbnail?id=${match[1]}&sz=s4000` : '';
+                        });
 
-                rows.slice(1).forEach(row => {
-                    const ref = row[0];
-                    const grade = row[1];
-                    const size = row[2];
-                    const brand = row[3];
-                    const model = row[4];
-                    const type = row[5];
-                    const pictures = row[6] ? row[6].split(',') : [];
+                        output += `
+                            <div style="background-color: #f0f0f0; border: 1px solid #ddd; padding: 20px; margin:20px auto; display: flex; flex-wrap: wrap; width: fit-content; align-content: centre; max-width:900px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; font-family: Arial, sans-serif;">
+                                <div style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 10px; margin:auto; display: flex; justify-content: center; align-items: center; width: 100%; max-width:800px;">
+                                    <div style="flex: 1; padding-left: 30px; text-align: left;">
+                                        <p style="font-weight: bold; font-size: 18px; margin-bottom: -10px;">Size: ${size}</p>
+                                        <p style="font-weight: bold; font-size: 18px;">${brand} ${model}</p>
+                                    </div>
+                                    <div style="flex: 1; padding-left: 20px; padding-right: 20px; text-align: left;">
+                                        <p style="font-weight: normal; margin-bottom: -10px;">Type: ${type}</p>
+                                        <p style="font-weight: normal;">Grade: ${grade}</p>
+                                    </div>
+                                    <div style="flex: 1; padding-right: 30px; text-align: left;">
+                                        <p style="color: red; margin-bottom: -10px;">Ref: ${ref}</p>
+                                        <p>
+                                            <a href="mailto:boots@winslowunitedjuniorsfc.co.uk?subject=${encodeURIComponent('Enquiry about boots: Ref ' + ref)}" style="color: blue; text-decoration: underline;">Email us to reserve boots</a>
+                                        </p>
+                                    </div>
+                                </div>
 
-                    const imageUrls = pictures.map(pic => {
-                        const match = pic.match(/id=([a-zA-Z0-9_-]+)/);
-                        return match ? `https://drive.google.com/thumbnail?id=${match[1]}&sz=s4000` : '';
+                                <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 20px; width: 100%;">
+                                    ${imageUrls.map(url => url ? `
+                                        <div style="border: 1px solid #ddd; border-radius: 8px; padding: 5px; background: #f9f9f9; margin: 10px;">
+                                            <img src="${url}" alt="${ref}" style="max-height: 180px; width: auto; border-radius: 8px; cursor: pointer;" onclick="openLightbox('${url}')">
+                                        </div>
+                                    ` : '').join('')}
+                                </div>
+                            </div>
+                        `;
                     });
 
-output += `
-    <div style="background-color: #f0f0f0; border: 1px solid #ddd; padding: 20px; margin:20px auto; display: flex; flex-wrap: wrap; width: fit-content; align-content: centre; max-width:900px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; font-family: Arial, sans-serif;">
-        <div style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 10px; margin:auto; display: flex; justify-content: center; align-items: center; width: 100%; max-width:800px;">
-            <div style="flex: 1; padding-left: 30px; text-align: left;">
-                <p style="font-weight: bold; font-size: 18px; margin-bottom: -10px;">Size: ${size}</p>
-                <p style="font-weight: bold; font-size: 18px;">${brand} ${model}</p>
-            </div>
-            <div style="flex: 1; padding-left: 20px; padding-right: 20px; text-align: left;">
-                <p style="font-weight: normal; margin-bottom: -10px;">Type: ${type}</p>
-                <p style="font-weight: normal;">Grade: ${grade}</p>
-    
-            </div>
-            <div style="flex: 1; padding-right: 30px; text-align: left;">
-                <p style="color: red; margin-bottom: -10px;">Ref: ${ref}</p>
-		<p>
-		    <a href="mailto:boots@winslowunitedjuniorsfc.co.uk?subject=${encodeURIComponent('Enquiry about boots: Ref ' + ref)}" style="color: blue; text-decoration: underline;">Email us to reserve boots</a>
-		</p>
+                    document.getElementById('inventory').innerHTML = output;
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
 
-            </div>
-        </div>
+            function openLightbox(imageUrl) {
+                const lightbox = document.createElement('div');
+                lightbox.style.position = 'fixed';
+                lightbox.style.top = '0';
+                lightbox.style.left = '0';
+                lightbox.style.width = '100%';
+                lightbox.style.height = '100%';
+                lightbox.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                lightbox.style.display = 'flex';
+                lightbox.style.alignItems = 'center';
+                lightbox.style.justifyContent = 'center';
+                lightbox.style.zIndex = '1000';
 
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 20px; width: 100%;">
-            ${imageUrls.map(url => url ? `
-                <div style="border: 1px solid #ddd; border-radius: 8px; padding: 5px; background: #f9f9f9; margin: 10px;">
-                    <img src="${url}" alt="${ref}" style="max-height: 180px; width: auto; border-radius: 8px; cursor: pointer;" onclick="openLightbox('${url}')">
-                </div>
-            ` : '').join('')}
-        </div>
-    </div>
-`;
+                const imgElement = document.createElement('img');
+                imgElement.src = imageUrl;
+                imgElement.style.maxHeight = '90vh';
+                imgElement.style.maxWidth = '90vw';
+                imgElement.style.objectFit = 'contain';
+                imgElement.style.borderRadius = '8px';
 
+                lightbox.appendChild(imgElement);
+                lightbox.addEventListener('click', () => {
+                    document.body.removeChild(lightbox);
                 });
 
-                document.getElementById('inventory').innerHTML = output;
-            } catch (error) {
-                console.error('Error fetching data:', error);
+                document.body.appendChild(lightbox);
             }
-        }
 
-        function openLightbox(imageUrl) {
-            const lightbox = document.createElement('div');
-            lightbox.style.position = 'fixed';
-            lightbox.style.top = '0';
-            lightbox.style.left = '0';
-            lightbox.style.width = '100%';
-            lightbox.style.height = '100%';
-            lightbox.style.backgroundColor = 'rgba(0,0,0,0.8)';
-            lightbox.style.display = 'flex';
-            lightbox.style.alignItems = 'center';
-            lightbox.style.justifyContent = 'center';
-            lightbox.style.zIndex = '1000';
+            window.addEventListener('DOMContentLoaded', loadInventory);
+        </script>
+    </div>
 
-            const imgElement = document.createElement('img');
-            imgElement.src = imageUrl;
-            imgElement.style.maxHeight = '90vh';
-            imgElement.style.maxWidth = '90vw';
-            imgElement.style.objectFit = 'contain';
-            imgElement.style.borderRadius = '8px';
-
-            lightbox.appendChild(imgElement);
-            lightbox.addEventListener('click', () => {
-                document.body.removeChild(lightbox);
-            });
-
-            document.body.appendChild(lightbox);
-        }
-
-        window.addEventListener('DOMContentLoaded', loadInventory);
-    </script>
-</div>
-
-
-<!-- Footer -->
-<footer class="footer" style="background-color: #055ca3; color: white; padding: 10px; text-align: center;">
-    <h1>Winslow United Juniors FC</h1>
-    <a href="https://www.winslowunitedjuniorsfc.co.uk/boot-xchange" style="color: white; text-decoration: underline;"><p>Click here to see our Boot X-Change FAQs</a>
-</footer>
+    <!-- Footer -->
+    <footer class="footer" style="background-color: #055ca3; color: white; padding: 10px; text-align: center;">
+        <h1>Winslow United Juniors FC</h1>
+        <a href="https://www.winslowunitedjuniorsfc.co.uk/boot-xchange" style="color: white; text-decoration: underline;">
+            <p>Click here to see our Boot X-Change FAQs</p>
+        </a>
+    </footer>
 
 </body>
 </html>
