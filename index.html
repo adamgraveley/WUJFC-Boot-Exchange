@@ -100,7 +100,7 @@
         <script>
             const spreadsheetId = '1sGzdyIYG05S12iYBtqlhnnpgnE530r-Ws_SCid8CXM8';
             const apiKey = 'AIzaSyC34SYm9S1I2_ihYLV2PRZxSV8-v7li0tk';
-            const range = 'Inventory!B:H';
+            const range = 'Inventory!B:I';
 
             async function loadInventory() {
                 try {
@@ -120,6 +120,12 @@
                         const model = row[4];
                         const type = row[5];
                         const pictures = row[6] ? row[6].split(',') : [];
+	                const status = row[7]; // Status is in column I
+
+	                // Filter out rows where 'Status' is not blank
+	                if (status && status.trim() !== '') {
+ 	                   return; // Skip this row if status is not blank
+ 	               }
 
                         const imageUrls = pictures.map(pic => {
                             const match = pic.match(/id=([a-zA-Z0-9_-]+)/);
