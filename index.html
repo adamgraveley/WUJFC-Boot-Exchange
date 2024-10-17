@@ -54,7 +54,7 @@
         }
 
         /* Responsive Styles */
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .hero {
                 flex-direction: column; /* Stack elements on smaller screens */
                 align-items: flex-start; /* Align to the left */
@@ -133,7 +133,7 @@
                         });
 
                         output += `
-    <div style="background-color: #f0f0f0; border: 1px solid #ddd; padding: 20px; margin:20px auto; display: flex; flex-wrap: wrap; width: fit-content; align-content: centre; max-width:900px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; font-family: Arial, sans-serif;">
+    <div style="background-color: #f0f0f0; border: 1px solid #ddd; padding: 20px; margin:20px auto; display: flex; flex-wrap: wrap; align-content: centre; width: 80%; max-width:900px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; font-family: Arial, sans-serif;">
         <div style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 10px; margin:auto; display: flex; justify-content: center; align-items: center; width: 100%; max-width:800px;">
             <div style="flex: 1; padding-left: 30px; text-align: left;">
                 <p style="font-weight: bold; font-size: 18px; margin-bottom: -10px;">Size: ${size}</p>
@@ -154,7 +154,7 @@
         <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 20px; width: 100%;">
             ${imageUrls.map(url => url ? `
                 <div style="border: 1px solid #ddd; border-radius: 8px; padding: 5px; background: #f9f9f9; margin: 10px;">
-                    <img src="${url}" alt="${ref}" style="max-height: 180px; width: auto; border-radius: 8px; cursor: pointer;" onclick="openLightbox('${url}')">
+                    <img src="${url}" alt="${ref}" style="max-height: 180px; border-radius: 8px; cursor: pointer;" onclick="openLightbox('${url}')">
                 </div>
             ` : '').join('')}
         </div>
